@@ -21,12 +21,10 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private UserMapper userMapper;
 
-    public User createUser (UserDto userDto) {
-        log.info("//////////////////// user {}", userMapper.toModel(userDto).getUsername());
+    public void createUser (UserDto userDto) {
         log.info("Trying create user {} ...", userDto.getUsername());
         User user = userRepository.save(userMapper.toModel(userDto));
         log.info("Created user with id {}", user.getId());
-        return user;
     }
     
 }

@@ -23,14 +23,11 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-    @Autowired
-    private UserMapper userMapper;
-
-    @PostMapping
-    public UserDto createUser (@RequestBody @Valid UserDto userDto) {
+    @PostMapping("/sign-up")
+    public String createUser (@RequestBody @Valid UserDto userDto) {
         log.info("Received user {} ...", userDto.getUsername());
-        User user = userService.createUser(userDto);
-        return userMapper.toDto(user);
+        userService.createUser(userDto);
+        return "OK";
     }
     
 }
