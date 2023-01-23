@@ -4,6 +4,7 @@ import com.tweteroo.domain.dto.TweetDto;
 import com.tweteroo.domain.model.Tweet;
 import com.tweteroo.service.TweetService;
 import java.util.List;
+import java.util.Optional;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.crossstore.ChangeSetPersister.NotFoundException;
@@ -29,7 +30,9 @@ public class TweetController {
 
   @PostMapping
   @ResponseStatus(HttpStatus.CREATED)
-  public String createTweet (@RequestBody @Valid TweetDto tweetDto) throws NotFoundException {
+  public String createTweet (
+      @RequestBody @Valid TweetDto tweetDto
+  ) throws NotFoundException {
     log.info("Received tweet request {}", tweetDto.getText());
     tweetService.createTweet(tweetDto);
     return "OK";
@@ -40,6 +43,12 @@ public class TweetController {
       throws NotFoundException {
     log.info("Received find tweets by username request, username {}", username);
     return tweetService.findTweetsByUsername(username);
+  }
+
+  @GetMapping
+  public List<Tweet> findAllTweets (@RequestParam("page") Optional<Integer> page) throws NotFoundException {
+    log.info("Query param received in page is {}", page.get());
+    return tweetService.findAllTweets(page);
   }
 
 }
