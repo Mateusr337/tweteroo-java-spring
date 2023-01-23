@@ -10,6 +10,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.crossstore.ChangeSetPersister.NotFoundException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
+import org.springframework.data.web.SortDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -48,8 +51,11 @@ public class TweetController {
   }
 
   @GetMapping
-  public Page<Tweet> findAllTweets (Pageable page) throws NotFoundException {
-    log.info("Received pageable request to find tweets");
+  public Page<Tweet> findAllTweets (
+      @PageableDefault(sort = {"id"}, direction = Sort.Direction.DESC, value = 5)
+      Pageable page
+  ) {
+    log.info("Received pageable request to find tweets at page {}", page.getPageNumber());
     return tweetService.findAllTweets(page);
   }
 

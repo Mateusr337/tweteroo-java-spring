@@ -46,19 +46,7 @@ public class TweetServiceImpl implements TweetService {
   }
 
   public Page<Tweet> findAllTweets(Pageable page) {
-//    boolean hasEnoughLength = sizeIsGranderThan(page.get());
-//    if (hasEnoughLength) {
-      return tweetRepository.findAll(page);
-//    }
-//    return tweetRepository.findAll();
-  }
-
-  private boolean sizeIsGranderThan (int page) {
-    long size = tweetRepository.count();
-    if (size > page * 10L - 1) {
-      return true;
-    }
-    return false;
+    return tweetRepository.findAll(page);
   }
 
 }
