@@ -6,7 +6,7 @@ import org.springframework.data.crossstore.ChangeSetPersister.NotFoundException;
 
 public interface UserService {
 
-    void createUser (UserDto userDto);
+    void createUser (UserDto userDto) throws NotFoundException;
 
     User  findUserByUsername (String name) throws NotFoundException;
 

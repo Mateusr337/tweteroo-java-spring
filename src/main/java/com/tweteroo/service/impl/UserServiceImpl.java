@@ -24,7 +24,8 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private UserMapper userMapper;
 
-    public void createUser (UserDto userDto) {
+    public void createUser (UserDto userDto) throws NotFoundException {
+        findUserByUsername(userDto.getUsername());
         log.info("Trying create user {} ...", userDto.getUsername());
         User user = userRepository.save(userMapper.toModel(userDto));
         log.info("Created user with id {}", user.getId());
