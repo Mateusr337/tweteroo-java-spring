@@ -1,6 +1,9 @@
 package com.tweteroo.service.impl;
 
+import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.crossstore.ChangeSetPersister.NotFoundException;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import com.tweteroo.domain.dto.UserDto;
@@ -26,5 +29,16 @@ public class UserServiceImpl implements UserService {
         User user = userRepository.save(userMapper.toModel(userDto));
         log.info("Created user with id {}", user.getId());
     }
-    
+
+    public User findUserByUsername (String username) throws NotFoundException {
+        log.info("Trying find username {} ...", username);
+        Optional<User> user = userRepository.findUserByUsername(username);
+        if (user.isPresent()) {
+            log.info("Found username {}", user.get().getUsername());
+            return user.get();
+        }
+        log.info("Found username {}", username);
+        throw new NotFoundException();
+    }
+
 }

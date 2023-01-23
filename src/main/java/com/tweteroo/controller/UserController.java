@@ -7,8 +7,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.tweteroo.domain.dto.UserDto;
-import com.tweteroo.domain.model.User;
-import com.tweteroo.mapper.UserMapper;
 import com.tweteroo.service.UserService;
 
 import jakarta.validation.Valid;
@@ -25,7 +23,7 @@ public class UserController {
 
     @PostMapping("/sign-up")
     public String createUser (@RequestBody @Valid UserDto userDto) {
-        log.info("Received user {} ...", userDto.getUsername());
+        log.info("Received user request {}", userDto.getUsername());
         userService.createUser(userDto);
         return "OK";
     }
