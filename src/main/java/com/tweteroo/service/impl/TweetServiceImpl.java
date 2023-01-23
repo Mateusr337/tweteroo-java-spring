@@ -12,7 +12,9 @@ import java.util.Optional;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.crossstore.ChangeSetPersister.NotFoundException;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
@@ -43,16 +45,12 @@ public class TweetServiceImpl implements TweetService {
     return tweetRepository.findTweetsByUsername(username);
   }
 
-  public List<Tweet> findAllTweets(Optional<Integer> page) {
-    if (page.isEmpty()) {
-      return tweetRepository.findAll();
-    }
-    boolean hasEnoughLength = sizeIsGranderThan(page.get());
-    if (hasEnoughLength) {
-      PageRequest pageable = PageRequest.of(page.get(), 2);
-      return (List<Tweet>) tweetRepository.findAll(pageable);
-    }
-    return tweetRepository.findAll();
+  public Page<Tweet> findAllTweets(Pageable page) {
+//    boolean hasEnoughLength = sizeIsGranderThan(page.get());
+//    if (hasEnoughLength) {
+      return tweetRepository.findAll(page);
+//    }
+//    return tweetRepository.findAll();
   }
 
   private boolean sizeIsGranderThan (int page) {

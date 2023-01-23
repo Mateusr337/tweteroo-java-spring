@@ -8,6 +8,8 @@ import java.util.Optional;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.crossstore.ChangeSetPersister.NotFoundException;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -46,8 +48,8 @@ public class TweetController {
   }
 
   @GetMapping
-  public List<Tweet> findAllTweets (@RequestParam("page") Optional<Integer> page) throws NotFoundException {
-    log.info("Query param received in page is {}", page.get());
+  public Page<Tweet> findAllTweets (Pageable page) throws NotFoundException {
+    log.info("Received pageable request to find tweets");
     return tweetService.findAllTweets(page);
   }
 
